@@ -11,7 +11,7 @@ const Footer = () => {
               <div className="logo-icon">
                 <ChefHat size={20} strokeWidth={2.5} />
               </div>
-              <span className="logo-text" style={{ fontSize: '1.5rem' }}>ChefGenie</span>
+              <span className="logo-text" style={{ fontSize: '1.5rem' }}>Mohit's Kitchen</span>
             </div>
             <p style={{ color: 'var(--brand-gray)', maxWidth: '320px', lineHeight: '1.6', fontSize: '0.875rem' }}>
               Transforming the way you cook with the power of AI. Discover amazing recipes using the ingredients you already have at home.
@@ -22,7 +22,7 @@ const Footer = () => {
               <a href="#" className="social-btn"><Github size={18} /></a>
             </div>
           </div>
-          
+
           <div>
             <h4 style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>Platform</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -41,10 +41,10 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
           <p style={{ fontSize: '0.75rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--brand-gray)' }}>
-            © {new Date().getFullYear()} ChefGenie AI • All Rights Reserved
+            © {new Date().getFullYear()} Mohit's Kitchen AI • All Rights Reserved
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--brand-gray)', fontWeight: '500' }}>
             <span>Powered by</span>

@@ -17,10 +17,10 @@ const SkeletonLoader = () => (
       <div className="skeleton-box" style={{ height: '3rem', width: '8rem', borderRadius: '1rem' }}></div>
       <div className="skeleton-box" style={{ height: '3rem', width: '8rem', borderRadius: '1rem' }}></div>
     </div>
-    <div 
-      style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'minmax(0, 1fr)', 
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(0, 1fr)',
         gap: '2rem',
         width: '100%'
       }}
@@ -55,12 +55,12 @@ function App() {
     try {
       const endpoint = mode === 'dish' ? '/dish' : '/ingredients';
       const payload = mode === 'dish' ? { dishName: inputValue } : { ingredients: inputValue };
-      
+
       // Ensure the URL contains /api/recipe correctly
-      const finalUrl = API_BASE_URL.includes('/api/recipe') 
-        ? `${API_BASE_URL}${endpoint}` 
+      const finalUrl = API_BASE_URL.includes('/api/recipe')
+        ? `${API_BASE_URL}${endpoint}`
         : `${API_BASE_URL}/api/recipe${endpoint}`;
-        
+
       const response = await axios.post(finalUrl, payload);
       setRecipe(response.data);
     } catch (err) {
@@ -80,20 +80,20 @@ function App() {
         <div className="mx-auto flex flex-col items-center" style={{ maxWidth: '48rem' }}>
           {/* Hero Section */}
           <div className="text-center" style={{ marginBottom: '5rem' }}>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="logo-container" 
+              className="logo-container"
               style={{ justifyContent: 'center', marginBottom: '2rem' }}
             >
               <div className="logo-icon">
                 <ChefHat size={24} strokeWidth={2.5} />
               </div>
-              <span className="logo-text" style={{ fontSize: '1.5rem' }}>ChefGenie</span>
+              <span className="logo-text" style={{ fontSize: '1.5rem' }}>Mohit's Kitchen</span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
@@ -102,8 +102,8 @@ function App() {
               Master Any Meal <br style={{ display: 'none' }} />
               <span className="text-green">By Just Entering Items</span>
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -115,20 +115,20 @@ function App() {
 
           {/* Form Section */}
           <div style={{ width: '100%' }}>
-             <RecipeInput onGenerate={handleGenerateRecipe} loading={loading} />
+            <RecipeInput onGenerate={handleGenerateRecipe} loading={loading} />
           </div>
 
           {/* Results Section */}
           <div style={{ width: '100%' }}>
             <AnimatePresence mode="wait">
               {loading && <SkeletonLoader key="skeleton" />}
-              
+
               {error && (
-                <motion.div 
-                   key="error"
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   className="error-card"
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="error-card"
                 >
                   <p style={{ fontWeight: 800, fontSize: '1.125rem', marginBottom: '0.25rem' }}>Ouch! Something went wrong.</p>
                   <p style={{ opacity: 0.8 }}>{error}</p>
