@@ -6,7 +6,9 @@ import RecipeInput from './components/RecipeInput';
 import RecipeCard from './components/RecipeCard';
 import Footer from './components/Footer';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/recipe';
+// Standardize the API URL: remove trailing slash if present
+const RAW_API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = RAW_API_URL.endsWith('/') ? RAW_API_URL.slice(0, -1) : RAW_API_URL;
 
 const SkeletonLoader = () => (
   <div className="skeleton animate-pulse" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -54,7 +56,12 @@ function App() {
       const endpoint = mode === 'dish' ? '/dish' : '/ingredients';
       const payload = mode === 'dish' ? { dishName: inputValue } : { ingredients: inputValue };
       
-      const response = await axios.post(`${API_BASE_URL}${endpoint}`, payload);
+      // Ensure the URL contains /api/recipe correctly
+      const finalUrl = API_BASE_URL.includes('/api/recipe') 
+        ? `${API_BASE_URL}${endpoint}` 
+        : `${API_BASE_URL}/api/recipe${endpoint}`;
+        
+      const response = await axios.post(finalUrl, payload);
       setRecipe(response.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to generate recipe. Please try again.');
