@@ -1,82 +1,102 @@
-# AI Recipe Generator
+# Mohit's Kitchen - AI Recipe Generator
 
-A modern, responsive web application that generates cooking recipes based on either a dish name or available ingredients using the Groq API (LLaMA 3).
+A modern, responsive full-stack web application that generates structured cooking recipes based on either a dish name or available ingredients using Python FastAPI and Groq API (`llama-3.1-8b-instant` model).
 
 ## Tech Stack
-- **Frontend:** React, Vite, Tailwind CSS, Lucide React
-- **Backend:** Node.js, Express, Axios
-- **AI Integration:** Groq API (`llama3-8b-8192` model)
+
+- **Frontend:** React, Vite, Framer Motion, Lucide React, Vanilla CSS / Tailwind
+- **Backend:** Python 3, FastAPI, Pydantic, Uvicorn, Groq Python SDK, python-dotenv
+- **AI Integration:** Groq API (`llama-3.1-8b-instant` model)
 
 ## Project Structure
+
 ```
-project/
+Mohit-s-Kitchen/
 ├── backend/
-│   ├── controllers/      # Route handlers (recipeController.js)
-│   ├── routes/           # Express routes (recipeRoutes.js)
-│   ├── services/         # External API integrations (groqService.js)
-│   ├── index.js          # Express server entry point
-│   ├── package.json      
-│   ├── .env              # Environment variables (API Key)
-│   └── .env.example      # Example environment variables
+│   ├── main.py            # FastAPI entry point & app configuration
+│   ├── config.py          # Environment settings loader
+│   ├── requirements.txt   # Python package dependencies
+│   ├── .env               # Environment variables (GROQ_API_KEY)
+│   ├── .env.example       # Example environment variables template
+│   ├── routes/
+│   │   └── recipe.py      # APIRouter for /dish and /ingredients endpoints
+│   ├── services/
+│   │   └── groq_service.py# Groq Cloud API interaction & prompt logic
+│   └── schemas/
+│       └── recipe.py      # Pydantic request & response models
 └── frontend/
     ├── src/
-    │   ├── components/   # React components (RecipeInput, RecipeCard)
-    │   ├── App.jsx       # Main application layout and state
-    │   ├── index.css     # Global styles and Tailwind imports
-    │   └── main.jsx      # React entry point
+    │   ├── components/    # React components (RecipeInput, RecipeCard, Footer)
+    │   ├── App.jsx        # Main application layout and state
+    │   ├── index.css      # Global styles
+    │   └── main.jsx       # React entry point
     ├── index.html
     ├── package.json
-    ├── tailwind.config.js # Tailwind CSS configuration
     └── vite.config.js
 ```
 
 ## How to Run Locally
 
 ### Prerequisites
-- Node.js installed on your machine
-- A Groq API Key (get one from [console.groq.com](https://console.groq.com))
 
-### 1. Backend Setup
-1. Open a terminal and navigate to the backend folder:
+- **Python 3.10+** installed on your machine
+- **Node.js** installed for running the frontend
+- A **Groq API Key** (get one from [console.groq.com](https://console.groq.com))
+
+---
+
+### 1. Backend Setup (FastAPI)
+
+1. Open a terminal and navigate to the `backend` folder:
    ```bash
    cd backend
    ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up environment variables:
-   - Ensure you have a `.env` file in the `backend` directory.
-   - It should contain your Groq API key and Port:
-     ```env
-     GROQ_API_KEY=your_actual_api_key_here
-     PORT=5000
-     ```
-4. Start the backend server:
-   ```bash
-   node index.js
-   ```
-   *The server should now be running on `http://localhost:5000`.*
 
-### 2. Frontend Setup
-1. Open a new terminal and navigate to the frontend folder:
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Set up environment variables:
+   - Create or edit the `.env` file inside the `backend` directory:
+     ```env
+     PORT=5000
+     GROQ_API_KEY=your_actual_groq_api_key_here
+     ```
+
+4. Start the FastAPI backend server:
+   ```bash
+   uvicorn main:app --reload
+   ```
+   *The FastAPI server will start on `http://localhost:5000`.*
+   *Interactive API documentation (Swagger UI) is available at `http://localhost:5000/docs`.*
+
+---
+
+### 2. Frontend Setup (React + Vite)
+
+1. Open a new terminal and navigate to the `frontend` folder:
    ```bash
    cd frontend
    ```
+
 2. Install dependencies:
    ```bash
    npm install
    ```
+
 3. Start the Vite development server:
    ```bash
    npm run dev
    ```
-   *The frontend should now be running, typically on `http://localhost:5173`. Open this URL in your browser.*
+   *The React app will start on `http://localhost:5173`.*
 
-## Suggestions for Future Improvements
-1. **User Authentication:** Allow users to sign up and save their favorite generated recipes.
-2. **Export functionality:** Add "Download as PDF" or "Print Recipe" buttons.
-3. **Dietary Preferences & Allergies:** Allow users to toggle filters like "Vegan", "Gluten-Free", or specify allergies which get appended to the AI prompt.
-4. **Image Generation:** Integrate an AI Image Generator (like DALL-E or Midjourney via API) to generate a picture of the finished dish.
-5. **Loading Skeletons:** Implement shimmer effects/skeleton loaders while waiting for the Groq API response.
-6. **Mobile App:** Package the frontend using React Native or Capacitor for a mobile-native experience.
+---
+
+## API Endpoints
+
+- **`GET /`** - Root status endpoint (`{"message": "ChefGenie Backend is live and cooking! 🍳"}`)
+- **`GET /health`** - Health check endpoint (`{"status": "ok"}`)
+- **`POST /api/recipe/dish`** - Generate recipe by dish name (`{"dishName": "Pasta Carbonara"}`)
+- **`POST /api/recipe/ingredients`** - Generate recipe by available ingredients (`{"ingredients": "Eggs, Cheese, Pasta, Black Pepper"}`)
+- **`GET /docs`** - Interactive Swagger UI documentation
